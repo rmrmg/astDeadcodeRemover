@@ -27,12 +27,10 @@ and then to
 def function():
     print("PRODUCTION MODE")
     return 1
-    print("VERY DEAD CODE")
-    return -1
 ```
 
 # Motivation
-I found several programs which are able to detect dead code but unfortunately I could not find any which can *remove* dead code
+I found several programs which are able to detect dead code but unfortunately I could not find any which can ***remove*** dead code so I did my own
 
 # Requirement
     Python 3.9 or higher (ast.unparse was added in Python 3.9)
