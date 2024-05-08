@@ -7,7 +7,7 @@ class RewriteIf(ast.NodeTransformer):
     def visit_If(self, node):
         # print("NODE", node, node._fields, node.test._fields, [ast.dump(b) for b in node.body]) #, type(node.test.value))
         if 'value' in node.test._fields:
-            # print("NODET", node.test.value)
+            #print("NODET", node.test.value)
             if node.test.value is False:
                 self.changed += 1
                 #print("VVV", ast.dump(node.body[0]))
@@ -17,6 +17,14 @@ class RewriteIf(ast.NodeTransformer):
                 # print("VVV", ast.dump(node))
                 self.changed += 1
                 return node.body
+        elif 'op' in node.test._fields and 'operand' in node.test._fields:
+            if isinstance(node.test.op, ast.Not) and node.test.operand.value == True:
+                # print("NODE O", node.test.op, "OPE", node.test.operand)
+                # not True
+                node.body = [ast.Pass()]
+                return node
+        else:
+            print("NODE else:", [(b, ast.dump(getattr(node.test, b))) for b in node.test._fields])
         return node
 
 
